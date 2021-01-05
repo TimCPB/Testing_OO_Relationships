@@ -19,7 +19,11 @@ require_relative '../lib/secret_diary'
 
 RSpec.describe SecretDiary do
   context "when locked" do
-    pending "refuses to be read"
+    it "refuses to be read" do
+      diary = double(:diary)
+      sd = SecretDiary.new(diary)
+      expect(sd.read).to eq("Go away!")
+    end
 
     pending "refuses to be written"
   end
