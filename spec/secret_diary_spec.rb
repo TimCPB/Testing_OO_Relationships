@@ -25,7 +25,11 @@ RSpec.describe SecretDiary do
       expect(sd.read).to eq("Go away!")
     end
 
-    pending "refuses to be written"
+    it "refuses to be written" do 
+      diary = double(:diary)
+      sd = SecretDiary.new(diary)
+      expect(sd.write("first message")).to eq("Go away!")
+    end
   end
 
   context "when unlocked" do
