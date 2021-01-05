@@ -19,12 +19,12 @@ require_relative '../lib/secret_diary'
 
 RSpec.describe SecretDiary do
 
-  context "when locked" do
+  before(:each) do
+    @diary = double(:diary)
+    @sd = SecretDiary.new(@diary)
+  end
 
-    before(:all) do
-      diary = double(:diary)
-      @sd = SecretDiary.new(diary)
-    end
+  context "when locked" do
 
     it "refuses to be read" do
       expect(@sd.read).to eq("Go away!")
@@ -38,14 +38,19 @@ RSpec.describe SecretDiary do
   context "when unlocked" do
 
     it "gets read" do
-      diary = double(:diary)
-      # allow(diary).to receive(:read)
-      sd = SecretDiary.new(diary)
-      sd.unlock
-      expect(diary).to receive(:read)
-      sd.read
+      # diary = double(:diary)
+      # sd = SecretDiary.new(diary)
+      @sd.unlock
+      expect(@diary).to receive(:read)
+      @sd.read
     end
 
-    pending "gets written"
+    it "gets written" do
+      # diary = double(:diary)
+      # sd = SecretDiary.new(diary)
+      @sd.unlock
+      expect(@diary).to receive(:write)
+      @sd.write("first message")
+    end
   end
 end
